@@ -1,94 +1,94 @@
-# 沙漠球王（Desert Goat: SIUUUUU）
+# Desert Goat: SIUUUUU
 
-[English](README_EN.md)
+[中文](README_CN.md)
 
-一个 C++ 编写的像素风迷宫射击游戏，可在浏览器或 Windows 下运行。
+A pixel-art maze shooter written in C++. It runs in a web browser through WebAssembly and also has a native Windows build.
 
-玩家控制罗哥穿过按需生成的迷宫，在追兵和 Boss 的阻拦下找到奖杯。游戏共有九关，每关使用不同的地图种子，奖杯距离和敌人强度逐步提高。
+You play as Ronaldo and travel through a procedurally generated maze while rivals and bosses try to stop you. There are nine stages. Each stage uses a different maze seed, and the trophy distance and enemy pressure increase as the game progresses.
 
-## 运行
+## Running the game
 
-浏览器版：
+Browser version:
 
 ```powershell
 node serve.cjs
 ```
 
-然后打开 <http://127.0.0.1:4173/>。
+Then open <http://127.0.0.1:4173/>.
 
-Windows 版可以直接运行 `build/DesertGoat.exe`。
+For the Windows version, run `build/DesertGoat.exe`.
 
-## 操作
+## Controls
 
-| 按键 | 功能 |
+| Key | Action |
 | --- | --- |
-| WASD / 方向键 | 移动；举盾时改变朝向 |
-| Space | 发射足球 |
-| C（长按） | 举盾，挡住正面射来的攻击 |
-| V | 使用当前选择的大招 |
-| B | 使用摩根专访，每关限一次 |
-| P | 暂停 |
-| M | 静音 |
-| Enter | 确认选项或跳过动画 |
+| WASD / Arrow keys | Move; change direction while shielding |
+| Space | Shoot a football |
+| Hold C | Raise the shield and block attacks from the front |
+| V | Use the selected special move |
+| B | Use the Morgan Interview once per stage |
+| P | Pause |
+| M | Mute |
+| Enter | Confirm an option or skip a cinematic |
 
-菜单同时支持鼠标和键盘操作。
+Menus support both keyboard and mouse input.
 
-## 玩法
+## How to play
 
-罗哥出生在迷宫中央。画面中的红线指向奖杯，但不会显示真正的路线；有时奖杯看起来很近，中间仍会隔着墙。
+Ronaldo starts near the center of the maze. A thin red line points toward the trophy, but it does not reveal the correct path. The trophy may appear close even when a wall forces the player to take a longer route.
 
-前三关到达奖杯即可通关。从第四关开始，奖杯由大 Boss 锁定，必须先击败 Boss，再接触奖杯。通关后罗哥会举起奖杯并完成 SIUUUUU 动作。
+In the first three stages, reaching the trophy completes the stage. From stage four onward, a boss locks the trophy. The boss must be defeated before the trophy can be collected. The stage ends with Ronaldo lifting the trophy and performing the SIUUUUU celebration.
 
-普通敌人会使用 IDA* 寻路追击，并在有视线时射击。底部的 `REINFORCEMENTS` 进度条蓄满后会生成一批新敌人，同时恢复一格体力。画面上方显示当前距离奖杯的百分比。
+Regular rivals use IDA* pathfinding to chase the player and shoot when they have a clear line of sight. When the `REINFORCEMENTS` meter is full, a new group of rivals appears and Ronaldo recovers one health point. The bar at the top of the screen shows the direct-distance progress toward the trophy.
 
-每次进入关卡前可以选择一个大招：
+Before each stage, one of four special moves can be selected:
 
-| 大招 | 效果 |
+| Special move | Effect |
 | --- | --- |
-| Armband Slam | 范围震波，造成伤害、眩晕和击退 |
-| Ronado | 向当前方向旋转突进，沿途造成伤害 |
-| Phone Smash | 投出手机，在落点造成范围伤害 |
-| Elbow Strike | 对正前方造成较高伤害 |
+| Armband Slam | A short-range shockwave that damages, stuns and pushes rivals |
+| Ronado | A spinning dash that damages enemies along its path |
+| Phone Smash | Throws a phone and creates an area attack at the landing point |
+| Elbow Strike | Deals heavy damage directly in front of Ronaldo |
 
-四个大招都能伤害 Boss。能量耗尽后会自动恢复，普通足球命中也会补充少量能量。
+All four special moves can damage bosses. Their energy recharges over time, and normal football hits restore a small amount of energy.
 
-完成前三关后解锁摩根专访。它会清除画面内的普通敌人和敌方子弹、回满体力，并封印 Boss 两秒。摩根专访不会直接伤害 Boss。
+The Morgan Interview is unlocked after clearing the first three stages. It removes visible regular rivals and enemy shots, restores full health, and seals the boss for two seconds. It does not directly damage the boss.
 
-Boss 释放特殊技能前会暂停游戏并显示 WARNING 窗口。提示结束后仍会保留一段躲避时间。部分地面攻击不能用护盾抵挡。
+Boss special attacks pause the game and display a WARNING window. After the warning closes, the player still has a short time to move away. Some ground attacks cannot be blocked by the shield.
 
-第八关的梅西和第九关的马奎尔在半血时进入狂暴。进入狂暴时红色窗口闪烁三次，此后 Boss 变红，并提高移动、射击和特殊技能频率。
+Messi in stage eight and Maguire in stage nine enter rage mode at half health. A red warning window flashes three times, the boss turns red, and its movement, shooting and special attacks become faster.
 
-## 编译
+## Building
 
-需要 Clang（含 WebAssembly 链接器）、MinGW g++ 和 Node.js。
+The build requires Clang with WebAssembly support, MinGW g++, and Node.js.
 
-只编译浏览器版并运行测试：
+Build the browser version and run the tests:
 
 ```powershell
 ./build.ps1
 ```
 
-同时生成 Windows 版本：
+Build and test both the browser and Windows versions:
 
 ```powershell
 ./build.ps1 -Native
 ```
 
-根目录的 `game.js` 是由 C++ WebAssembly 生成的浏览器成品。`build.ps1` 运行时还会在 `build/` 中产生测试程序、截图和中间文件，这些文件可以安全删除并重新生成。
+The root `game.js` file is the generated browser bundle with the WebAssembly binary embedded in it. Running `build.ps1` also creates test executables, screenshots and intermediate files in `build/`. These files can be deleted and regenerated.
 
-## 目录
+## Project layout
 
 ```text
-src/       C++ 游戏逻辑、渲染和平台适配
-tests/     规则、战斗、寻路和浏览器测试
-tools/     WebAssembly 打包与测试画面转换工具
-build/     本地构建产物（不提交到 Git）
+src/       C++ game logic, rendering and platform adapters
+tests/     Rule, combat, pathfinding and browser tests
+tools/     WebAssembly bundling and test-frame conversion tools
+build/     Local build output (not committed to Git)
 ```
 
-## 说明
+## Note
 
-本项目是虚构戏仿作品。人物、台词和情节均用于游戏表现，与现实人物的真实言论或立场无关。
+This project is a fictional parody. Its characters, dialogue and events are used for game presentation and do not represent the real statements or views of any person.
 
-## 许可证
+## License
 
-代码使用 [MIT License](LICENSE)。
+The code is available under the [MIT License](LICENSE).
