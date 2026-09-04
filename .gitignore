@@ -1,0 +1,16 @@
+# Local build output
+/build/
+
+# Temporary preserved binaries
+/*.keep
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
