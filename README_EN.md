@@ -88,3 +88,7 @@ build/     Local build output (not committed to Git)
 ## Note
 
 This project is a fictional parody. Its characters, dialogue and events are used for game presentation and do not represent the real statements or views of any person.
+
+## License
+
+The code is available under the [MIT License](LICENSE).
